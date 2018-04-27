@@ -8,15 +8,15 @@ class Block : public sf::Drawable
         Block(double xx, double yy)
         {
             x=xx; y=yy;
-            marker=sf::CircleShape(0.01);
-            marker.setPosition(x,y);
+            marker=sf::CircleShape(0.6);
+            marker.setPosition(100*x,-100*y);
         }
         Block(){}
 
         // Methods
         void update(void)
         {
-            marker.setPosition(x,y);
+            marker.setPosition(100*x,-100*y);
         }
 
     private:

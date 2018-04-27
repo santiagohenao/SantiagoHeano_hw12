@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Keyboard.hpp>
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -19,10 +20,14 @@ int main()
 {
     static double dx=c*dt*1.1;
     double xi=-2.;
-    double xf=2.;
+    double xf=20.;
     double xactual=xi;
 
     vector<Block> space;
+
+    float tim=0;
+
+    int pause_status=0;
 
     while(xactual<=xf)
     {
@@ -37,6 +42,20 @@ int main()
         xactual+=dx;
     }
 
+    sf::Font font;
+    if (!font.loadFromFile("UbuntuMono-R.ttf"))
+    {
+        std::cout << "Error loading font\n" ;
+    }
+
+    sf::Text atext;
+    atext.setFont(font);
+    atext.setCharacterSize(50);
+    atext.setStyle(sf::Text::Bold);
+    atext.setFillColor(sf::Color::White);
+    atext.setPosition(-70,70);
+
+    string s="0";
 
     #include "window.h"
 

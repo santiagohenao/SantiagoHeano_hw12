@@ -1,6 +1,8 @@
 sf::RenderWindow window(sf::VideoMode(400, 400), "Holololo");
 
-sf::View view(sf::FloatRect(-2,2,4,-4));
+
+
+sf::View view(sf::Vector2f(0, 0), sf::Vector2f(400, 400));
 
 while (window.isOpen())
 {
@@ -13,22 +15,22 @@ while (window.isOpen())
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
     {
-        view.move(0.1,0);
+        view.move(10,0);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
     {
-        view.move(-0.1,0);
+        view.move(-10,0);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
     {
-        view.move(0,0.1);
+        view.move(0,-10);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
     {
-        view.move(0,-0.1);
+        view.move(0,10);
     }
 
-    window.setVerticalSyncEnabled(true);
+    //window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     window.clear();
 
@@ -36,11 +38,28 @@ while (window.isOpen())
 
     // Calculation:
 
-    for(int i=1;i<(space.size()-1);i++)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
     {
-        space[i].y=-c*dt/dx*(-space[i-1].y+space[i].y)+space[i].y;
-        space[i].update();
+        pause_status++;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+    {
+        pause_status=0;
+    }
+
+    if(pause_status>0)
+    {
+        for(int i=1;i<(space.size()-1);i++)
+        {
+            space[i].y=-c*dt/dx*(-space[i-1].y+space[i].y)+space[i].y;
+            space[i].update();
+            tim+=dt;
+        }
+    }
+
+
+
+
 
 
     for(int i=0;i<space.size();i++)
@@ -48,7 +67,10 @@ while (window.isOpen())
         window.draw(space[i]);
     }
 
+    s=std::to_string(tim);
+    atext.setString(s);
 
+    window.draw(atext);
 
     window.display();
 
